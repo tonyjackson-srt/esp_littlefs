@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 file(GLOB SOURCES src/littlefs/*.c)
 list(APPEND SOURCES src/esp_littlefs.c src/littlefs_esp_part.c src/lfs_config.c)
 
+idf_build_get_property(idf_version IDF_VERSION)
+
 if(IDF_TARGET STREQUAL "esp8266")
     # ESP8266 configuration here
 else()
@@ -14,7 +16,12 @@ else()
     endif()
 endif()
 
-list(APPEND pub_requires esp_partition)
+if(idf_version VERSION_LESS "5.0")
+    list(APPEND pub_requires spi_flash)
+else()
+    list(APPEND pub_requires esp_partition)
+endif()
+
 list(APPEND priv_requires esptool_py spi_flash vfs)
 
 idf_component_register(
