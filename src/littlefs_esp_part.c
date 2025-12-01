@@ -7,7 +7,11 @@
 //#define ESP_LOCAL_LOG_LEVEL ESP_LOG_INFO
 
 #include "esp_log.h"
+#if __has_include("esp_partition.h")
 #include "esp_partition.h"
+#else
+typedef struct esp_partition_t esp_partition_t;
+#endif
 #include "esp_vfs.h"
 #include "littlefs/lfs.h"
 #include "esp_littlefs.h"
