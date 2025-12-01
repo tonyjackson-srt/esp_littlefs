@@ -5,8 +5,20 @@
 #include "esp_err.h"
 #include "esp_idf_version.h"
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
+#if !defined(ESP_LITTLEFS_IDF_VERSION_MAJOR)
+#define ESP_LITTLEFS_IDF_VERSION_MAJOR 4
+#endif
+
+#if ESP_LITTLEFS_IDF_VERSION_MAJOR < 5
 #include "esp_partition.h"
+#else
+typedef struct esp_partition_t esp_partition_t;
+esp_err_t esp_partition_read(const esp_partition_t* partition, size_t src_offset, void* dst, size_t size);
+esp_err_t esp_partition_write(const esp_partition_t* partition, size_t dst_offset, const void* src, size_t size);
+esp_err_t esp_partition_erase_range(const esp_partition_t* partition, size_t offset, size_t size);
+#endif
 
 #ifdef CONFIG_LITTLEFS_SDMMC_SUPPORT
 #include <sdmmc_cmd.h>
