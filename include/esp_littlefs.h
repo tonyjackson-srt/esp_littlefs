@@ -5,7 +5,13 @@
 #include "esp_err.h"
 #include "esp_idf_version.h"
 #include <stdbool.h>
+#include <stdint.h>
+
+#if __has_include("esp_partition.h")
 #include "esp_partition.h"
+#else
+typedef struct esp_partition_t esp_partition_t;
+#endif
 
 #ifdef CONFIG_LITTLEFS_SDMMC_SUPPORT
 #include <sdmmc_cmd.h>
