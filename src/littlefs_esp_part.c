@@ -7,7 +7,7 @@
 //#define ESP_LOCAL_LOG_LEVEL ESP_LOG_INFO
 
 #include "esp_log.h"
-#if __has_include("esp_partition.h")
+ #if ESP_LITTLEFS_IDF_VERSION_MAJOR >= 5
 #include "esp_partition.h"
 #else
 typedef struct esp_partition_t esp_partition_t;

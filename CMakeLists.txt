@@ -4,6 +4,8 @@ file(GLOB SOURCES src/littlefs/*.c)
 list(APPEND SOURCES src/esp_littlefs.c src/littlefs_esp_part.c src/lfs_config.c)
 
 idf_build_get_property(idf_version IDF_VERSION)
+string(REPLACE "." ";" version_list ${idf_version})
+list(GET version_list 0 idf_version_major)
 
 if(IDF_TARGET STREQUAL "esp8266")
     # ESP8266 configuration here
@@ -57,3 +59,5 @@ endif()
 if(NOT CONFIG_LITTLEFS_ASSERTS)
     target_compile_definitions(${COMPONENT_LIB} PUBLIC -DLFS_NO_ASSERT)
 endif()
+
+target_compile_definitions(${COMPONENT_LIB} PUBLIC -DESP_LITTLEFS_IDF_VERSION_MAJOR=${idf_version_major})
