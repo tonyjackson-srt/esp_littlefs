@@ -22,7 +22,12 @@ else()
     list(APPEND pub_requires esp_partition)
 endif()
 
-list(APPEND priv_requires esptool_py spi_flash vfs)
+set(priv_requires esptool_py vfs)
+if(idf_version VERSION_LESS "5.0")
+    list(APPEND priv_requires spi_flash)
+else()
+    list(APPEND priv_requires esp_partition)
+endif()
 
 idf_component_register(
     SRCS ${SOURCES}

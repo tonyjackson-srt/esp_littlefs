@@ -86,4 +86,3 @@ int littlefs_esp_part_sync(const struct lfs_config *c) {
     /* Unnecessary for esp-idf */
     return 0;
 }
-
