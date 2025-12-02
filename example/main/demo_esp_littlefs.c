@@ -19,9 +19,6 @@
 #include "esp_idf_version.h"
 #include "esp_flash.h"
 #include "esp_chip_info.h"
-#include "spi_flash_mmap.h"
-
-
 #include "esp_littlefs.h"
 
 static const char *TAG = "demo_esp_littlefs";

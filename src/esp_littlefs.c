@@ -9,7 +9,6 @@
 #endif // LOG_LOCAL_LEVEL
 
 #include "esp_littlefs.h"
-#include "esp_partition.h"
 #include "littlefs/lfs.h"
 #include "sdkconfig.h"
 #include "esp_log.h"
