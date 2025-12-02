@@ -6,8 +6,31 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
+#include "esp_err.h"
 #include "esp_vfs.h"
+
+#if !defined(ESP_LITTLEFS_IDF_VERSION_MAJOR)
+#ifdef ESP_IDF_VERSION_MAJOR
+#define ESP_LITTLEFS_IDF_VERSION_MAJOR ESP_IDF_VERSION_MAJOR
+#else
+#define ESP_LITTLEFS_IDF_VERSION_MAJOR 4
+#endif
+#endif
+
+#if ESP_LITTLEFS_IDF_VERSION_MAJOR < 5
 #include "esp_partition.h"
+#else
+typedef struct esp_partition_t esp_partition_t;
+typedef int esp_partition_mmap_handle_t;
+typedef int esp_partition_mmap_memory_t;
+esp_err_t esp_partition_read(const esp_partition_t* partition, size_t src_offset, void* dst, size_t size);
+esp_err_t esp_partition_write(const esp_partition_t* partition, size_t dst_offset, const void* src, size_t size);
+esp_err_t esp_partition_erase_range(const esp_partition_t* partition, size_t offset, size_t size);
+esp_err_t esp_partition_mmap(const esp_partition_t* partition, size_t offset, size_t size,
+                             esp_partition_mmap_memory_t memory, const void** out_ptr,
+                             esp_partition_mmap_handle_t* out_handle);
+esp_err_t esp_partition_munmap(esp_partition_mmap_handle_t handle);
+#endif
 #include "littlefs/lfs.h"
 #include "sdkconfig.h"
 
