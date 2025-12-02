@@ -8,7 +8,11 @@
 #include <stddef.h>
 #include <stdint.h>
 #if !defined(ESP_LITTLEFS_IDF_VERSION_MAJOR)
+#ifdef ESP_IDF_VERSION_MAJOR
+#define ESP_LITTLEFS_IDF_VERSION_MAJOR ESP_IDF_VERSION_MAJOR
+#else
 #define ESP_LITTLEFS_IDF_VERSION_MAJOR 4
+#endif
 #endif
 
 #if ESP_LITTLEFS_IDF_VERSION_MAJOR < 5
