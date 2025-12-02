@@ -17,7 +17,13 @@
 #endif
 #endif
 
-#if ESP_LITTLEFS_IDF_VERSION_MAJOR < 5
+#if defined(__has_include)
+#  if __has_include("esp_partition.h")
+#    define ESP_LITTLEFS_HAVE_PARTITION_HEADER 1
+#  endif
+#endif
+
+#if ESP_LITTLEFS_IDF_VERSION_MAJOR < 5 || defined(ESP_LITTLEFS_HAVE_PARTITION_HEADER)
 #include "esp_partition.h"
 #else
 typedef struct esp_partition_t esp_partition_t;
